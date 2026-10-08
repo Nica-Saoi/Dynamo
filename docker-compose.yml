@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  scylla:
+    image: scylladb/scylla:latest
+    container_name: Dynamo-db
+    ports:
+      - "9042:9042"
+      - "9160:9160"
+      - "9180:9180"
+    volumes:
+      - scylla-data:/var/lib/dynamo
+    environment:
+      - SCYLLA_CLUSTER_NAME=MyCluster
+      - SCYLLA_LISTEN_ADDRESS=auto
+      - SCYLLA_BROADCAST_ADDRESS=auto
+      - SCYLLA_RPC_ADDRESS=auto
+      - SCYLLA_BROADCAST_RPC_ADDRESS=auto
