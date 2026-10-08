@@ -1,0 +1,39 @@
+ScyllaDB Integration Test
+
+on:
+  push:
+    branches: [ "database" ]
+  pull_request:
+    branches: [ "database" ]
+
+jobs:
+  test-database:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Tune Linux Kernel for ScyllaDB
+      # ScyllaDB requires a high maximum number of concurrent asynchronous I/O operations
+      run: |
+        sudo sysctl -w fs.aio-max-nr=1048576
+
+    - name: Start ScyllaDB Service
+      run: |
+        docker compose up -d scylladb
+
+    - name: Wait for ScyllaDB Healthcheck
+      run: |
+        echo "Waiting for ScyllaDB node to transition to a healthy state..."
+        until [ "$(docker inspect --format='{{.State.Health.Status}}' scylla-ci-node)" = "healthy" ]; do
+          sleep 2
+        done
+        echo "ScyllaDB is ready!"
+
+    - name: Verify Connection via CQLSH
+      run: |
+        docker exec -i scylla-ci-node cqlsh -e "CREATE KEYSPACE test_keyspace WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1}; DESCRIBE KEYSPACES;"
+
+    # Add your application code testing steps below (e.g., npm test, pytest, cargo test)
+    # Your tests can connect to ScyllaDB at localhost:9042

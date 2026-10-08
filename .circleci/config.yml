@@ -1,0 +1,37 @@
+version: 2.1
+jobs:
+  test:
+    machine:
+      image: ubuntu-2204:current
+    steps:
+      - checkout
+      - run:
+          name: Start ScyllaDB
+          command: |
+            docker compose up -d scylla
+      - run:
+          name: Wait for ScyllaDB
+          command: |
+            for attempt in $(seq 1 60); do
+              if docker compose exec -T scylla cqlsh -e "SELECT release_version FROM system.local;" >/dev/null 2>&1; then
+                echo "ScyllaDB is ready"
+                exit 0
+              fi
+              sleep 5
+            done
+            docker compose logs scylla
+            echo "ScyllaDB did not become ready within 5 minutes"
+            exit 1
+      - run:
+          name: Test ScyllaDB connection and keyspace setup
+          command: |
+            docker compose exec -T scylla cqlsh -e "CREATE KEYSPACE IF NOT EXISTS test_keyspace WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1}; DESCRIBE KEYSPACE test_keyspace;"
+      - run:
+          name: Stop ScyllaDB
+          command: docker compose down
+          when: always
+
+workflows:
+  test:
+    jobs:
+      - test
