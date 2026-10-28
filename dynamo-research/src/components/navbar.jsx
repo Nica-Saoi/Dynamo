@@ -13,7 +13,7 @@ function Navbar(){
             </div>
             <div className='navRight'>
                 <ul>
-                    <li><a>Research History(?)</a></li>
+                    <li><a>Research History</a></li>
                     <li><a>Repo/Docs</a></li>
                     <li><a>Final Report</a></li>
                 </ul>
