@@ -1,18 +1,24 @@
 services:
-  scylla:
-    image: scylladb/scylla:latest
+  scylladb:
+    image: scylladb/scylla:6.2
+    container_name: dynamo-scylladb
+    restart: unless-stopped
+
     ports:
-      - "9042:9042"
-      - "9160:9160"
-      - "9180:9180"
+      - "127.0.0.1:9042:9042"
+
     volumes:
-      - scylla-data:/var/lib/scylla
-    environment:
-      - SCYLLA_CLUSTER_NAME=MyCluster
-      - SCYLLA_LISTEN_ADDRESS=auto
-      - SCYLLA_BROADCAST_ADDRESS=auto
-      - SCYLLA_RPC_ADDRESS=auto
-      - SCYLLA_BROADCAST_RPC_ADDRESS=auto
+      - scylla_data:/var/lib/scylla
+
+    command:
+      - --smp
+      - "1"
+      - --memory
+      - 1G
+      - --overprovisioned
+      - "1"
+      - --developer-mode
+      - "1"
 
 volumes:
-  scylla-data:
+  scylla_data:
