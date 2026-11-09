@@ -1,0 +1,2 @@
+#ignore the .env file in the backend directory
+backend/.env
