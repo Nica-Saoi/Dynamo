@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const authorRoutes = require("./routes/authorRoutes");
 const paperRoutes = require("./routes/paperRoutes");
+const fileRoutes = require("./routes/fileRoutes");
 
 const app = express();
 
@@ -23,5 +24,5 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/authors", authorRoutes);
 app.use("/api/papers", paperRoutes);
-
+app.use("/api/files", fileRoutes);
 module.exports = app;
