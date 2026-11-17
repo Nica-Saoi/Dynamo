@@ -1,3 +1,4 @@
+import Link from '@mui/material/Link'
 import { useState } from 'react'
 // import './App.css'
 
@@ -12,13 +13,14 @@ function Home() {
         <div className='about'></div>
         <div className='supporting docs'>
             <h2>Repo</h2>
-        <button
-            type="button"
-            className="repo"
-            //   onClick={} navigate to repo page
-            >
-            Repo
-            </button>
+            <a href = "/repository">
+                <button
+                type="button"
+                className="repo"
+                >
+                Repo
+                </button>
+            </a>
         </div>
         <div className='gen findings'>
             <h2>General Findings</h2>
