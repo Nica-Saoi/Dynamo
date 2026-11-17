@@ -59,8 +59,6 @@ router.post("/", (req, res) => {
                 req.uploadedFileId
             );
 
-            const contents = await fs.readFile(req.file.path);
-
             const checksum = await calculateChecksum(req.file.path);
 
             const query = `
