@@ -109,3 +109,12 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+:root {
+    --purple: #3D0066;
+    --light-purple: #B58BD4;
+    --lavender: #F5ECFA;
+    --yellow: #FFE047;
+    --white: #FFFFFF;
+    --text-gray: #685A77;
+}
