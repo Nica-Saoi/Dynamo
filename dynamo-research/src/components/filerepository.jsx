@@ -1,11 +1,21 @@
-
 import { useState, useRef } from 'react'
+import '../styles/filerepository.css'
 
 function FileRepository() {
     const [showUpload, setShowUpload] = useState(false)
     const [selectedFiles, setSelectedFiles] = useState([])
     const fileInput = useRef(null)
         const [uploadSuccess, setUploadSuccess] = useState(false)
+
+    function closeUpload() {
+        setShowUpload(false)
+        setSelectedFiles([])
+        setUploadSuccess(false)
+
+        if (fileInput.current) {
+            fileInput.current.value = ''
+        }
+    }
 
     return (
         <div className="fileRepository">
@@ -88,18 +98,18 @@ function FileRepository() {
                                     Your file(s) have been added successfully.
                                 </p>
 
+                            <div className="successBox">
                                 <h1>✓</h1>
 
                                 <p>
                                     {selectedFiles.length} file(s) selected for upload.
                                 </p>
+                            </div>
 
                                 <button
                                     type="button"
                                     onClick={() => {
-                                        setShowUpload(false)
-                                        setUploadSuccess(false)
-                                        setSelectedFiles([])
+                                        closeUpload()
                                     }}
                                 >
                                     Done
@@ -109,13 +119,23 @@ function FileRepository() {
                             <>
                                 <button
                                     type="button"
-                                    onClick={() => setShowUpload(false)}
+                                    className="closeUpload"
+                                    onClick={closeUpload}
                                 >
                                     ×
                                 </button>
 
                                 <h2>Add Research Files</h2>
-                                <p>Drag and drop files here</p>
+                                <div className="uploadArea">
+                                    <p>Drag and drop files here</p>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => fileInput.current.click()}
+                                    >
+                                        Browse Files
+                                    </button>
+                                </div>
 
                                 <input
                                     type="file"
@@ -124,13 +144,6 @@ function FileRepository() {
                                     style={{ display: 'none' }}
                                     onChange={(e) => setSelectedFiles(Array.from(e.target.files))}
                                 />
-
-                                <button
-                                    type="button"
-                                    onClick={() => fileInput.current.click()}
-                                >
-                                    Browse Files
-                                </button>
 
                                 <p>Selected Files:</p>
 
@@ -144,9 +157,11 @@ function FileRepository() {
                                     </ul>
                                 )}
 
+                            <div className="uploadActions">
                                 <button
                                     type="button"
-                                    onClick={() => setShowUpload(false)}
+                                    className="cancelUpload"
+                                    onClick={closeUpload}
                                 >
                                     Cancel
                                 </button>
@@ -158,6 +173,7 @@ function FileRepository() {
                                 >
                                     Upload Files
                                 </button>
+                            </div>
                             </>
                         )}
 
