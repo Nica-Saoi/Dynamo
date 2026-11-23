@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { uploadFiles } from '../services/api'
+import { uploadFile } from '../services/api'
 import '../styles/filerepository.css'
 
 function FileRepository() {
@@ -17,7 +17,7 @@ function FileRepository() {
 
         try {
             for (const file of selectedFiles) {
-                const result = await uploadFiles(file)
+                const result = await uploadFile(file)
                 setUploadedFiles((prev) => [
                     ...prev,
                     result
@@ -28,7 +28,7 @@ function FileRepository() {
                 )
             }
 
-            setuploadSuccess(true)
+            setUploadSuccess(true)
 
         } catch (error) {
             setUploadError(error.message)
