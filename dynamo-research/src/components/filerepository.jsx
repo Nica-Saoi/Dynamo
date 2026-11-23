@@ -1,12 +1,41 @@
 import { useState, useRef } from 'react'
+import { uploadFiles } from '../services/api'
 import '../styles/filerepository.css'
 
 function FileRepository() {
     const [showUpload, setShowUpload] = useState(false)
     const [selectedFiles, setSelectedFiles] = useState([])
     const fileInput = useRef(null)
+    const [uploading, setUploading] = useState(false)
+    const [uploadError, setUploadError] = useState(null)
+    const [uploadedFiles, setUploadedFiles] = useState([])
         const [uploadSuccess, setUploadSuccess] = useState(false)
 
+    async function handleUpload() {
+        setUploading(true)
+        setUploadError(null)
+
+        try {
+            for (const file of selectedFiles) {
+                const result = await uploadFiles(file)
+                setUploadedFiles((prev) => [
+                    ...prev,
+                    result
+                ])
+
+                setSelectedFiles((prev) => 
+                    prev.filter(item => item !== file)
+                )
+            }
+
+            setuploadSuccess(true)
+
+        } catch (error) {
+            setUploadError(error.message)
+        } finally {
+            setUploading(false)
+        }
+    }
     function closeUpload() {
         setShowUpload(false)
         setSelectedFiles([])
@@ -58,33 +87,34 @@ function FileRepository() {
                 </thead>
 
                 <tbody>
+                {uploadedFiles.length === 0 ? (
                     <tr>
-                        <td>Simulation_Data.csv</td>
-                        <td>Dataset</td>
-                        <td>2.4 MB</td>
-                        <td>
-                            <button type="button">View</button>
+                        <td colSpan={4}>
+                            No files uploaded yet.
                         </td>
                     </tr>
+                ) : (
+                    uploadedFiles.map(file => (
+                        <tr key={file.file_id}>
+                            <td>{file.filename}</td>
 
-                    <tr>
-                        <td>Research_Code.py</td>
-                        <td>Source Code</td>
-                        <td>15 KB</td>
-                        <td>
-                            <button type="button">View</button>
-                        </td>
-                    </tr>
+                            <td>
+                                {file.filename.split('.').pop().toUpperCase()}
+                            </td>
 
-                    <tr>
-                        <td>Experiment_Results.png</td>
-                        <td>Image</td>
-                        <td>1.8 MB</td>
-                        <td>
-                            <button type="button">View</button>
-                        </td>
-                    </tr>
-                </tbody>
+                            <td>
+                                {(file.size / 1024).toFixed(2)} KB
+                            </td>
+
+                            <td>
+                                <a href={`/api/files/${file.file_id}`}>
+                                    Download
+                                </a>
+                            </td>
+                        </tr>
+                    ))
+                )}
+            </tbody>
             </table>
 
             {showUpload && (
@@ -168,11 +198,17 @@ function FileRepository() {
 
                                 <button
                                     type="button"
-                                    disabled={selectedFiles.length === 0}
-                                    onClick={() => setUploadSuccess(true)}
+                                    disabled={selectedFiles.length === 0 || uploading}
+                                    onClick={handleUpload}
                                 >
-                                    Upload Files
+                                    {uploading ? 'Uploading...' : 'Upload Files'}
                                 </button>
+
+                                {uploadError && (
+                                    <p role="alert" style={{ color: 'red' }}>
+                                        {uploadError}
+                                    </p>
+                                )}
                             </div>
                             </>
                         )}
