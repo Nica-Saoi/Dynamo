@@ -1,22 +1,27 @@
 export async function uploadFile(file) {
-  const formData = new FormData()
-  formData.append('file', file)
+    const formData = new FormData()
 
-  const response = await fetch('/api/files', {
-    method: 'POST',
-    credentials: 'include',
-    body: formData
-  })
+    formData.append('file', file)
 
-  const data = await response.json()
+    const response = await fetch('/api/files', {
+        method: 'POST',
+        credentials: 'include',
+        body: formData
+    })
 
-  if (!response.ok) {
-    throw new Error(data.error || 'Upload failed')
-  }
+    const data = await response.json()
 
-  error.status = response.status
+    if (!response.ok) {
+        const error = new Error(
+            data.error || 'Upload failed'
+        )
 
-  return data
+        error.status = response.status
+
+        throw error
+    }
+
+    return data
 }
 
 export async function getPaperFiles(paperId) {
