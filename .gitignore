@@ -2,3 +2,5 @@
 backend/.env
 #ignore the uploads directory in the backend directory
 backend/uploads
+#ignore the node_modules directory in the backend directory
+backend/node_modules/
