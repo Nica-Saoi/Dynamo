@@ -17,6 +17,16 @@ CREATE TABLE IF NOT EXISTS users_by_id (
     created_at TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS users_by_username (
+    username TEXT PRIMARY KEY,
+    user_id UUID,
+);
+
+CREATE TABLE IF NOT EXISTS users_by_email (
+    email TEXT PRIMARY KEY,
+    user_id UUID,
+);
+
 -- Authors, including those without accounts
 CREATE TABLE IF NOT EXISTS authors_by_id (
     author_id UUID PRIMARY KEY,
@@ -75,6 +85,14 @@ CREATE TABLE IF NOT EXISTS papers_by_author (
     PRIMARY KEY ((author_id), paper_id)
 );
 
+CREATE TABLE IF NOT EXISTS papers_by_user (
+    user_id UUID,
+    paper_id UUID,
+    title TEXT,
+    uploaded_at TIMESTAMP,
+    PRIMARY KEY ((user_id), paper_id)
+);
+
 -- Authors associated with each paper
 CREATE TABLE IF NOT EXISTS authors_by_paper (
     paper_id UUID,
@@ -110,6 +128,15 @@ CREATE TABLE IF NOT EXISTS artifacts_by_id (
     version TEXT
 );
 
+CREATE TABLE IF NOT EXISTS artifacts_by_user (
+    user_id UUID,
+    artifact_id UUID,
+    artifact_name TEXT,
+    artifact_type TEXT,
+    uploaded_at TIMESTAMP,
+    PRIMARY KEY ((user_id), artifact_id)
+);
+
 --Docker images by artifact id for retrieval
 CREATE TABLE IF NOT EXISTS environments_by_artifact (
     artifact_id UUID,
@@ -129,7 +156,8 @@ CREATE TABLE IF NOT EXISTS files_by_id (
     content_type TEXT,
     file_size BIGINT,
     checksum_sha256 TEXT,
-    uploaded_at TIMESTAMP
+    uploaded_at TIMESTAMP,
+    uploaded_by UUID
 );
 
 -- Files associated with research papers
