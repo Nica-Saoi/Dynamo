@@ -1,24 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate, Link } from "react-router-dom";
+import { loginUser } from "../services/api";
 import "../styles/login-signup.css";
 
 function Login() {
+    const navigate = useNavigate();
+    const [serverError, setServerError] = useState("");
+
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isSubmitting },
     } = useForm();
 
-    const onSubmit = (data) => {
-        const userData = JSON.parse(localStorage.getItem(data.email));
-        if (userData) {
-            if (userData.password === data.password) {
-                console.log(userData.name + " You Are Successfully Logged In");
-            } else {
-                console.log("Email or Password is not matching with our record");
-            }
-        } else {
-            console.log("Email or Password is not matching with our record");
+    const onSubmit = async (data) => {
+        setServerError("");
+
+        try {
+            await loginUser(
+                data.email,
+                data.password
+            );
+
+            navigate("/");
+
+        } catch (error) {
+            setServerError(error.message);
         }
     };
 
@@ -26,24 +34,64 @@ function Login() {
         <>
             <h2>Login To Your Account</h2>
 
-            <form className="form" onSubmit={handleSubmit(onSubmit)}>
+            <form
+                className="form"
+                onSubmit={handleSubmit(onSubmit)}
+            >
                 <input
                     type="email"
-                    {...register("email", { required: true })}
+                    {...register("email", {
+                        required: "Email is mandatory"
+                    })}
                     placeholder="Email"
+                    autoComplete="email"
                 />
-                {errors.email && <span style={{ color: "red" }}>*Email* is mandatory</span>}
+
+                {errors.email && (
+                    <span style={{ color: "red" }}>
+                        {errors.email.message}
+                    </span>
+                )}
 
                 <input
                     type="password"
-                    {...register("password", { required: true })}
+                    {...register("password", {
+                        required: "Password is mandatory"
+                    })}
                     placeholder="Password"
+                    autoComplete="current-password"
                 />
-                {errors.password && <span style={{ color: "red" }}>*Password* is mandatory</span>}
 
-                <input type="submit" style={{ backgroundColor: "#a1eafb" }} />
+                {errors.password && (
+                    <span style={{ color: "red" }}>
+                        {errors.password.message}
+                    </span>
+                )}
+
+                {serverError && (
+                    <span role="alert" style={{ color: "red" }}>
+                        {serverError}
+                    </span>
+                )}
+
+                <input
+                    type="submit"
+                    value={
+                        isSubmitting
+                            ? "Logging In..."
+                            : "Login"
+                    }
+                    disabled={isSubmitting}
+                    style={{ backgroundColor: "#a1eafb" }}
+                />
             </form>
-            <p>Don't have an account? Sign up <a href="/signup" class="underline">here</a></p>
+
+            <p>
+                Don't have an account? Sign up{" "}
+                <Link to="/signup" className="underline">
+                    here
+                </Link>
+            </p>
         </>
     );
 }
