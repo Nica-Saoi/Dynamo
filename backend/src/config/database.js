@@ -7,7 +7,7 @@ const client = new cassandra.Client({
         port: Number(process.env.DB_PORT || 9042)
     },
     localDataCenter: process.env.DB_DATACENTER || "datacenter1",
-    keyspace: process.env.DB_KEYSPACE || "dynamo"
+    keyspace: process.env.DB_KEYSPACE || "dynamo_alpha"
 });
 
 async function connectDB() {
