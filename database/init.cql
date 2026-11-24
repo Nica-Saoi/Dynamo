@@ -22,12 +22,12 @@ CREATE TABLE IF NOT EXISTS users_by_id (
 
 CREATE TABLE IF NOT EXISTS users_by_username (
     username TEXT PRIMARY KEY,
-    user_id UUID,
+    user_id UUID
 );
 
 CREATE TABLE IF NOT EXISTS users_by_email (
     email TEXT PRIMARY KEY,
-    user_id UUID,
+    user_id UUID
 );
 
 -- Authors, including those without accounts
