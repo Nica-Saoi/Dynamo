@@ -91,6 +91,9 @@ function Login() {
                     </Link>
                 </p>
             </div>
+                <div className="authVersion">
+                Version 1.1.7
+            </div>
         </div>
     );
 }
