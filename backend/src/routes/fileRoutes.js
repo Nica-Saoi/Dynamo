@@ -5,6 +5,7 @@ const fs = require("fs/promises");
 const path = require("path");
 
 const { client } = require("../config/database");
+const { requireAuth } = require("../middleware/authMiddleware");
 const {
     upload,
     uploadDirectory
@@ -28,7 +29,7 @@ async function calculateChecksum(filePath) {
 }
 
 // POST /api/files
-router.post("/", (req, res) => {
+router.post("/", requireAuth, (req, res) => {
     upload.single("file")(req, res, async (error) => {
         if (error) {
             return res.status(400).json({
@@ -69,9 +70,10 @@ router.post("/", (req, res) => {
                     content_type,
                     file_size,
                     checksum_sha256,
-                    uploaded_at
+                    uploaded_at,
+                    uploaded_by
                 )
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             `;
 
             await client.execute(
@@ -83,7 +85,8 @@ router.post("/", (req, res) => {
                     req.file.mimetype,
                     req.file.size,
                     checksum,
-                    new Date()
+                    new Date(),
+                    req.user.user_id
                 ],
                 { prepare: true }
             );
