@@ -1,11 +1,14 @@
 -- Dynamo database
-CREATE KEYSPACE IF NOT EXISTS dynamo
+CREATE KEYSPACE IF NOT EXISTS dynamo_alpha
 WITH replication = {
     'class': 'NetworkTopologyStrategy',
     'replication_factor': 1
+}
+AND tablets = {
+    'enabled': false
 };
 
-USE dynamo;
+USE dynamo_alpha;
 
 -- Registered users
 CREATE TABLE IF NOT EXISTS users_by_id (
