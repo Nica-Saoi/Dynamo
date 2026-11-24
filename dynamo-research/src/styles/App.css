@@ -187,3 +187,42 @@ a, a:visited {
     border-right-color: var(--border);
   }
 }
+
+.homepage {
+  background-color: var(--white);
+  color: var(--purple);
+  padding: 40px;
+  min-height: 100vh;
+  text-align: left;
+}
+
+.homepage h1,
+.homepage h2 {
+  color: var(--purple);
+}
+
+.homepage p {
+  color: var(--text-gray);
+}
+
+.homepage .supporting,
+.homepage .gen {
+  background-color: var(--lavender);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.homepage button {
+  background-color: var(--purple);
+  color: var(--white);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.homepage button:hover {
+  background-color: var(--yellow);
+  color: var(--purple);
+}

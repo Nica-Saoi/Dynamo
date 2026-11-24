@@ -1,14 +1,82 @@
- .form {
+  .authPage {
+    background-color: var(--white);
+    min-height: 100vh;
+  }
+
+  .authHeader {
+    background-color: var(--purple);
+    padding: 25px;
+    text-align: left;
+  }
+
+  .authHeader h1 {
+    color: var(--white);
+    margin: 0;
+    font-size: 28px;
+  }
+
+  .authCard {
+    background-color: var(--purple);
+    width: 400px;
+    max-width: calc(100% - 40px);
+    margin: 80px auto;
+    padding: 35px;
+    box-sizing: border-box;
+    text-align: center; 
+  }
+
+  .authCard h2 {
+    color: var(--white);
+    margin-bottom: 30px;
+  }
+
+  .authCard .form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    width: 300px;
-    margin: 20px auto;
+    gap: 5px;
+    width: 100%;
   }
-   
-  input {
-    padding: 10px;
+
+  .authCard .form input {
+    padding: 12px;
     font-size: 16px;
+    border: 1px solid var(--purple);
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .authCard .form input[type="submit"] {
+    background-color: var(--lavender);
+    color: var(--purple);
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .authCard .form input[type="submit"]:hover {
+    background-color: var(--yellow);
+    color: var(--purple);
+  }
+
+  .authCard .form input:not([type="submit"]) {
+    background-color: var(--purple-gray);
+    color: var(--white);
+  }
+
+  .authCard .form input::placeholder {
+    color: var(--white);
+    opacity: 0.5;
+  }
+
+  .authCard p {
+    color: var(--white);
+    font-size: 14px;
+    margin-top: 20px;
+  }
+
+  .authCard a {
+    color: var(--white);
   }
 
   .underline {

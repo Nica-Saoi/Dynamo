@@ -13,13 +13,26 @@ import Signup from './components/signup'
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
 
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/repository" element={<FileRepository />} />
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup/>} />
+
+        <Route path="/home" element={
+          <>
+            <Navbar />
+            <Home />
+          </>
+        } />
+
+        <Route path="/repository" element={
+          <>
+            <Navbar />
+            <FileRepository />
+          </>
+        } />
+
       </Routes>
 
       {/* <Home /> */}

@@ -4,30 +4,36 @@ import { useState } from 'react'
 
 function Home() {
     return (
-    <>
-        <div>
-        <div className='updates wheel'>
-            {/* insert the latest 3 cards of updates */}
-            <a href='/'></a>
+        <div className='homePage'>
+        
+            <div className='homeAbout'>
+                <h2>Who Are We?</h2>
+
+                <p>
+                    Dynamo is research platform designed to make scientific research easier
+                    to explore, understand, and reproduce. By bringing research papers, 
+                    datasets, code, and supporting materials together in one place, Dynamo helps
+                    researchers, students, and curious minds better understand how research
+                    is connected and build upon existing work.
+                </p>
+            </div>
+
+            <div className="homeSearch">
+                <input
+                    type="text"
+                    placeholder="Search"
+                    className="searchInput"
+                />
+
+                <p>Or</p>
+                
+                <a href="/repository" className="uploadLink">
+                    Upload Files
+                </a>
+            </div>
+
         </div>
-        <div className='about'></div>
-        <div className='supporting docs'>
-            <h2>Repo</h2>
-            <a href = "/repository">
-                <button
-                type="button"
-                className="repo"
-                >
-                Repo
-                </button>
-            </a>
-        </div>
-        <div className='gen findings'>
-            <h2>General Findings</h2>
-            <p>Here is where a brief abstract goes of our findings</p>
-        </div>
-    </div>
-    </>
+       
     )
 }
 
