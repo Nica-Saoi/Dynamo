@@ -1,6 +1,5 @@
 import '../styles/navigation.css'
-import SearchIcon from '@mui/icons-material/Search';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
 function Navbar(){
@@ -10,13 +9,8 @@ function Navbar(){
                 <p className='title'><a href="/">Dynamo Research</a></p>
             </div>
             <div className='navRight'>
-            <SearchIcon/>
-                <ul>
-                    <li><a>Research History</a></li>
-                    <li><a href = "/repository">Repo/Docs</a></li>
-                    <li><a>Final Report</a></li>
-                </ul>
-                <a href="/login"><AccountBoxIcon/></a>
+                <AccountCircleIcon />
+                <span>Researcher</span>
             </div>
         </div>
     )

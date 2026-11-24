@@ -189,40 +189,82 @@ a, a:visited {
 }
 
 .homepage {
-  background-color: var(--white);
+    background-color: var(--white);
+    color: var(--purple);
+    min-height: 100vh;
+    padding: 40px 15px;
+    box-sizing: border-box;
+}
+
+.homepage .homeAbout {
+    background-color: var(--lavender);
+    border: 1px solid var(--light-purple);
+    border-radius: 8px;
+    padding: 20px 30px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.homepage .homeAbout h2 {
+    color: var(--light-purple);
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.homepage .homeAbout p {
+    color: var(--light-purple);
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+.homepage .homeSearch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.homepage .searchInput {
+    flex: 1;
+    min-width: 0;
+    height: 50px;
+    padding: 0 15px;
+    font-size: 18px;
+    border: 1px solid var(--light-purple);
+    background-color: var(--white);
+    color: var(--purple);
+    box-sizing: border-box;
+}
+
+.homepage .searchInput::placeholder {
+    color: var(--text-gray);
+}
+
+.homepage .homeSearch p {
+    color: var(--text-gray);
+    font-size: 18px;
+}
+
+.homepage .uploadLink {
+    color: var(--text-gray);
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.homepage .uploadLink:hover {
+    color: var(--purple);
+}
+
+.homepage .searchBox {
+  display: flex;
+  align-items: center;
+  width: 380px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.homepage .searchIcon {
   color: var(--purple);
-  padding: 40px;
-  min-height: 100vh;
-  text-align: left;
-}
-
-.homepage h1,
-.homepage h2 {
-  color: var(--purple);
-}
-
-.homepage p {
-  color: var(--text-gray);
-}
-
-.homepage .supporting,
-.homepage .gen {
-  background-color: var(--lavender);
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-.homepage button {
-  background-color: var(--purple);
-  color: var(--white);
-  border: none;
-  padding: 10px 18px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.homepage button:hover {
-  background-color: var(--yellow);
-  color: var(--purple);
+  font-size: 30px;
 }

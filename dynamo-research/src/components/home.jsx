@@ -1,10 +1,11 @@
 import Link from '@mui/material/Link'
 import { useState } from 'react'
+import SearchIcon from '@mui/icons-material/Search';
 // import './App.css'
 
 function Home() {
     return (
-        <div className='homePage'>
+        <div className='homepage'>
         
             <div className='homeAbout'>
                 <h2>Who Are We?</h2>
@@ -19,12 +20,16 @@ function Home() {
             </div>
 
             <div className="homeSearch">
-                <input
+                <div className="searchBox">
+                    <SearchIcon className="searchIcon" />
+
+                    <input
                     type="text"
                     placeholder="Search"
                     className="searchInput"
-                />
-
+                    />
+                </div>
+                
                 <p>Or</p>
                 
                 <a href="/repository" className="uploadLink">
