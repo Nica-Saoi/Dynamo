@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
-import { loginUser } from "../services/api";
+import { useAuth } from "../context/AuthContext";
 import "../styles/login-signup.css";
 
 function Login() {
+    const { login, loading } = useAuth();
     const navigate = useNavigate();
     const [serverError, setServerError] = useState("");
 
@@ -18,7 +19,7 @@ function Login() {
         setServerError("");
 
         try {
-            await loginUser(
+            await login(
                 data.email,
                 data.password
             );
@@ -81,7 +82,7 @@ function Login() {
                             ? "Logging In..."
                             : "Login"
                     }
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || loading }
                     style={{ backgroundColor: "#a1eafb" }}
                 />
             </form>

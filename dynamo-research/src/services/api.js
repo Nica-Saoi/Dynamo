@@ -4,6 +4,7 @@ export async function uploadFile(file) {
 
   const response = await fetch('/api/files', {
     method: 'POST',
+    credentials: 'include',
     body: formData
   })
 
@@ -12,6 +13,8 @@ export async function uploadFile(file) {
   if (!response.ok) {
     throw new Error(data.error || 'Upload failed')
   }
+
+  error.status = response.status
 
   return data
 }
@@ -46,7 +49,13 @@ async function authRequest(endpoint, method, body) {
     const data = await response.json()
 
     if (!response.ok) {
-        throw new Error(data.error || 'Request failed')
+        const error = new Error(
+            data.error || 'Request failed'
+        );
+
+        error.status = response.status;
+
+        throw error;
     }
 
     return data
